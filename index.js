@@ -1,6 +1,13 @@
 const express = require('express')
+const morgan = require('morgan')
+const uuid = require('node-uuid')
+
+morgan.token('id', req => JSON.stringify(req.body))
+
 const app = express()
+
 app.use(express.json())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :id'))
 
 let persons = [
     { 
@@ -58,22 +65,15 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 const generateId = () => {
-    /*
+    
     let newID = Math.floor(Math.random() * (10000000 - 1 + 1) + 1)
     console.log(newID)
 
     while (persons.find(person => person.id === newID) !== undefined) {
         newID = Math.floor(Math.random() * (10000000 - 1 + 1) + 1)
-        console.log(newID)
     }
 
     return newID
-    */
-
-    const maxId = persons.length > 0
-    ? Math.max(...persons.map(p => p.id))
-    : 0
-    return maxId + 1
 }
 
 app.post('/api/persons', (request, response) => {
@@ -102,6 +102,12 @@ app.post('/api/persons', (request, response) => {
     persons = persons.concat(person)
     response.json(person)
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+  
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
