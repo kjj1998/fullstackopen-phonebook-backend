@@ -1,1 +1,1 @@
-DELETE http://localhost:3001/api/persons/4
+DELETE https://dark-citadel-16213.herokuapp.com/api/persons/4
