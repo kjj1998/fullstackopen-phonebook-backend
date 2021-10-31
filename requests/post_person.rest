@@ -1,8 +1,0 @@
-POST http://localhost:3001/api/persons
-Content-Type: application/json
-
-{
-    "id" : 1,
-    "name": "Jon Cena", 
-    "number": "39-23-98347983"
-}
