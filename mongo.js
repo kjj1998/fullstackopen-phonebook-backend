@@ -17,7 +17,7 @@ const contactSchema = new mongoose.Schema({
     number: String
 })
 
-const Contact = new mongoose.model('Contact', contactSchema)
+const Contact = new mongoose.model('Person', contactSchema)
 
 const contact = new Contact({
     name: process.argv[3],
